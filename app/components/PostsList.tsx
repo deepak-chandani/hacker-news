@@ -1,9 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
 import PostMetaInfo from './PostMetaInfo'
 import Title from './Title'
+import {Post} from '../types/common';
 
-export default function PostsList ({ posts }) {
+type Props = {
+  posts: Post[];
+}
+
+const PostsList:React.FC<Props> = ({ posts }) => {
   if (posts.length === 0) {
     return (
       <p className='center-text'>
@@ -31,6 +35,4 @@ export default function PostsList ({ posts }) {
   )
 }
 
-PostsList.propTypes = {
-  posts: PropTypes.array.isRequired
-}
+export default PostsList;

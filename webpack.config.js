@@ -11,9 +11,21 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.(js)$/, use: 'babel-loader' },
-      { test: /\.css$/, use: [ 'style-loader', 'css-loader' ]}
+      {
+        test: /\.(tsx|js)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+          }
+        }
+      },
+      {test: /\.css$/, use: ['style-loader', 'css-loader']}
     ]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   plugins: [
@@ -21,7 +33,7 @@ module.exports = {
       template: 'app/index.html'
     }),
     new CopyPlugin([
-      { from : '_redirects' }
+      {from: '_redirects'}
     ])
   ],
   devServer: {

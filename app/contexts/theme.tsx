@@ -2,7 +2,7 @@ import * as React from 'react'
 
 type ThemeContextType = {
   theme: string;
-  toggleTheme: (t: string) => void;
+  toggleTheme: () => void;
 }
 
 const ThemeContext = React.createContext<ThemeContextType>(null);

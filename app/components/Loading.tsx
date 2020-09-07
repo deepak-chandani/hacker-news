@@ -12,8 +12,8 @@ const styles = {
 };
 
 type LoadingProps = {
-  text: string;
-  speed: number;
+  text?: string;
+  speed?: number;
 }
 
 const Loading: React.FC<LoadingProps> = (props) => {

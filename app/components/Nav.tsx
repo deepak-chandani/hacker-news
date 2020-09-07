@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import {useTheme} from '../contexts/theme'
 import {NavLink} from 'react-router-dom'
 
@@ -33,7 +33,7 @@ export default function Nav() {
       <button
         style={{fontSize: 30}}
         className='btn-clear'
-        onClick={toggleTheme}
+        onClick={() => toggleTheme()}
       >
         {theme === 'light' ? '🔦' : '💡'}
       </button>

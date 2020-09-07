@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom'
 import {useTheme} from './contexts/theme'
 import Loading from './components/Loading'
 import Nav from './components/Nav'
-import AppProviders from "./contexts";
+import {AppProviders} from "./contexts";
 
 const Posts = React.lazy(() => import('./components/Posts'))
 const Post = React.lazy(() => import('./components/Post'))

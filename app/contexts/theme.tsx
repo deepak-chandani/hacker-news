@@ -1,6 +1,11 @@
-import React from 'react'
+import * as React from 'react'
 
-const ThemeContext = React.createContext(null);
+type ThemeContextType = {
+  theme: string;
+  toggleTheme: (t: string) => void;
+}
+
+const ThemeContext = React.createContext<ThemeContextType>(null);
 
 const ThemeProvider = ({children}) => {
   const [theme, setTheme] = React.useState("light");
@@ -11,7 +16,7 @@ const ThemeProvider = ({children}) => {
     })
   }, [theme]);
 
-  const value = React.useMemo(() => {
+  const value = React.useMemo<ThemeContextType>(() => {
     return {
       theme,
       toggleTheme,

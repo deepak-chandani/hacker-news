@@ -1,5 +1,4 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
 
 const styles = {
   content: {
@@ -10,9 +9,14 @@ const styles = {
     marginTop: '20px',
     textAlign: 'center',
   }
+};
+
+type LoadingProps = {
+  text: string;
+  speed: number;
 }
 
-const Loading = (props) => {
+const Loading: React.FC<LoadingProps> = (props) => {
   const [content, setContent] = React.useState(props.text);
 
   React.useEffect(() => {
@@ -30,11 +34,6 @@ const Loading = (props) => {
       {content}
     </p>
   )
-}
-
-Loading.propTypes = {
-  text: PropTypes.string.isRequired,
-  speed: PropTypes.number.isRequired,
 }
 
 Loading.defaultProps = {

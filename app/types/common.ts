@@ -8,6 +8,11 @@ interface Post {
     descendants: number;
 };
 
+type FetchPostType = {
+    type: 'top' | 'new';
+}
+
 export {
-    Post
+    Post,
+    FetchPostType
 }

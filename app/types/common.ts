@@ -6,7 +6,7 @@ interface Post {
     by: string;
     time: number;
     descendants: number;
-    kids: number[] | null;
+    kids?: number[] | null;
 };
 
 interface Comment {

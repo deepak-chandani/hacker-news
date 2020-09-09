@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import queryString from 'query-string'
 import Loading from './Loading'
 import PostMetaInfo from './PostMetaInfo'
@@ -6,8 +6,13 @@ import Title from './Title'
 import Comment from './Comment'
 import useFetchPost from "../hooks/useFetchPost";
 
+type Props = {
+  location: {
+    search: string;
+  }
+};
 
-const Post = (props) => {
+const Post = (props: Props) => {
   const { id } = queryString.parse(props.location.search);
   const {post, loadingPost, loadingComments, comments, error} = useFetchPost(id);
 

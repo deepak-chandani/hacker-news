@@ -1,79 +1,92 @@
-import * as React from 'react'
-import { fetchMainPosts } from '../utils/api'
-import {FetchPostType, Post} from "../types/common";
+import * as React from 'react';
+import {useEffect} from "react";
+import {Comment, Post} from "../types/common";
+import { fetchItem, fetchComments } from '../utils/api'
+
 
 type State = {
-  posts: Post[] | null;
+  post: Post | null;
+  loadingPost: boolean;
+  comments: Comment[] | null;
+  loadingComments: boolean;
   error: string | null;
-  loading: boolean;
 };
 
-type Action= {
-  type: 'FETCH' | 'SUCCESS' | 'ERROR';
-  posts?: Post[];
-  error?: string;
+type Action = { type: 'FETCH_POST_REQUEST'}
+    | {type: "FETCH_POST_SUCCESS"; post: Post}
+    | {type: "ERROR"; error: string}
+    | {type: "FETCH_COMMENTS_REQUEST"}
+    | {type: "FETCH_COMMENTS_SUCCESS"; comments: Comment[]}
+
+const postReducer: React.Reducer<State, Action> = (state: State, action: Action): State => {
+    switch (action.type) {
+        case "FETCH_POST_REQUEST":
+            return {
+                ...state,
+                loadingPost: true,
+                loadingComments: true,
+                error: null,
+            };
+        case "FETCH_POST_SUCCESS":
+            return {
+                ...state,
+                post: action.post,
+                loadingPost: false,
+                loadingComments: true,
+                error: null,
+            };
+        case "FETCH_COMMENTS_REQUEST":
+            return {
+                ...state,
+                loadingComments: true,
+                error: null,
+            };
+        case "FETCH_COMMENTS_SUCCESS":
+            return {
+                ...state,
+                comments: action.comments,
+                loadingPost: false,
+                loadingComments: false,
+                error: null,
+            };
+        case "ERROR":
+            return {
+                ...state,
+                loadingPost: false,
+                loadingComments: false,
+                error: action.error,
+            };
+    }
 }
 
-
-const postReducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case 'FETCH':
-      return {
-        ...state,
-        loading: true,
-      };
-    case 'SUCCESS':
-      return {
-        ...state,
-        loading: false,
-        posts: action.posts
-      };
-    case 'ERROR':
-      return {
-        ...state,
-        loading: false,
-        error: action.error
-      };
-    default:
-      return state;
-  }
+const initialState: State = {
+    post: null,
+    loadingPost: true,
+    comments: null,
+    loadingComments: true,
+    error: null,
 };
 
-const initialState: State =  {
-  posts: null,
-  error: null,
-  loading: true,
-};
-const useFetchPost = (type: FetchPostType) => {
-  const [state, dispatch] = React.useReducer<React.Reducer<State, Action>>(postReducer, initialState)
+const useFetchPost = (postId: number): State  => {
+    const [state, dispatch] = React.useReducer(postReducer, initialState);
 
-  const fetchPost = React.useCallback((type: FetchPostType) => {
+    useEffect(() => {
 
-    dispatch({
-      type: 'FETCH'
-    });
-    fetchMainPosts(type)
-      .then((posts) => dispatch({
-        type: 'SUCCESS',
-        posts
-      }))
-      .catch(({ message }) => dispatch({
-        type: 'ERROR',
-        error: message,
-      }))
+        dispatch({type: "FETCH_POST_REQUEST"});
 
-  }, [type]);
+        fetchItem(postId)
+            .then((post) => {
+                dispatch({type: "FETCH_POST_SUCCESS", post})
 
-  React.useEffect(() => {
-    fetchPost(type);
-  }, [type]);
+                return fetchComments(post.kids || [])
+            })
+            .then((comments) => dispatch({type: 'FETCH_COMMENTS_SUCCESS', comments}))
+            .catch(({ message }) => dispatch({type: 'ERROR', error: message}));
 
-  return {
-    ...state
-  }
+    }, [postId]);
+
+    return {...state};
 };
 
 
-export {
-  useFetchPost
-};
+export default useFetchPost;

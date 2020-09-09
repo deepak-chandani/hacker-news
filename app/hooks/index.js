@@ -1,1 +1,1 @@
-export * from "./useFetchPost";
+export * from "./useFetchPosts";

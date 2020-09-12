@@ -1,6 +1,23 @@
 
-interface Post {
-    id: string | number;
+enum ModelType {
+   POST = 'story',
+   COMMENT = 'comment',
+}
+
+type Id = string | number;
+
+interface Model {
+    id: Id;
+    dead: boolean;
+    type: ModelType;
+    deleted: boolean;
+}
+
+interface Post{
+    id: Id;
+    dead: boolean;
+    type: ModelType;
+    deleted: boolean;
     url: string;
     title: string;
     text?: string;
@@ -11,10 +28,20 @@ interface Post {
 };
 
 interface Comment {
-    id: number;
+    id: Id;
+    dead: boolean;
+    type: ModelType;
+    deleted: boolean;
     by: string;
     time: number;
     text: string;
+}
+
+interface User {
+    id: Id;
+    about: string;
+    created: string;
+    karma: number;
 }
 
 type FetchPostType = {
@@ -24,5 +51,9 @@ type FetchPostType = {
 export {
     Post,
     Comment,
-    FetchPostType
+    FetchPostType,
+    ModelType,
+    User,
+    Model,
+    Id,
 }

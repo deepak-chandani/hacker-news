@@ -4,7 +4,7 @@ import { formatDate } from '../utils/helpers'
 import {useTheme} from '../contexts/theme'
 import {Post} from "../types/common";
 
-type Props = Omit<Post, 'url' | 'title'>;
+type Props = Omit<Post, 'url' | 'title'> & {comment: boolean};
 
 const PostMetaInfo:React.FC<Props> = ({ by, time, id, descendants }) => {
   const {theme} = useTheme();

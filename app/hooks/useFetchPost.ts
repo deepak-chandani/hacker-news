@@ -7,7 +7,7 @@ import { fetchItem, fetchComments } from '../utils/api'
 type State = {
   post: Post | null;
   loadingPost: boolean;
-  comments: Comment[] | null;
+  comments: Comment[];
   loadingComments: boolean;
   error: string | null;
 };
@@ -62,7 +62,7 @@ const postReducer: React.Reducer<State, Action> = (state: State, action: Action)
 const initialState: State = {
     post: null,
     loadingPost: true,
-    comments: null,
+    comments: [],
     loadingComments: true,
     error: null,
 };

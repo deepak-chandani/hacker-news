@@ -1,8 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import PostMetaInfo from './PostMetaInfo'
+import * as React from 'react';
+import PostMetaInfo from './PostMetaInfo';
+import {Comment as CommentType} from '../types/common';
 
-export default function Comment ({ comment }) {
+type Props = {
+  comment: CommentType;
+};
+
+export default function Comment ({ comment }: Props) {
   return (
     <div className='comment'>
       <PostMetaInfo

@@ -1,8 +1,9 @@
 
 interface Post {
-    id: string;
+    id: string | number;
     url: string;
     title: string;
+    text?: string;
     by: string;
     time: number;
     descendants: number;

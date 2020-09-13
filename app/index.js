@@ -10,6 +10,7 @@ import {AppProviders} from "./contexts";
 const Posts = React.lazy(() => import('./components/Posts'))
 const Post = React.lazy(() => import('./components/Post'))
 const User = React.lazy(() => import('./components/User'))
+const Test = React.lazy(() => import('./components/Test'))
 
 const App = () => {
   const {theme} = useTheme();
@@ -41,6 +42,7 @@ const AppRoutes = () => {
       />
       <Route path='/post' component={Post} />
       <Route path='/user' component={User} />
+      <Route path='/test' component={Test} />
       <Route render={() => <h1>404</h1>} />
     </Switch>
   )

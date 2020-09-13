@@ -6,10 +6,13 @@ import {User} from "../types/common";
 const fetcher = () => fetchUser('davidodio')
 
 const Test = () => {
-  const {status, execute, value, error} = useAsync<User>(fetcher);
+  const {status, execute, value, error} = useAsync<User>(fetcher, true);
 
   if(status === Status.IDLE){
-    return <p>sitting in idle state</p>
+    return <div>
+        <p>sitting in idle state</p>
+        <button onClick={execute}>Click to execute</button>
+      </div>
   }
 
   if(status === Status.PENDING){
